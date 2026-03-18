@@ -536,6 +536,34 @@
     from { opacity: 0; transform: translateY(-14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  .logo-glow {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .logo-glow::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(176,38,255,0.35) 0%, rgba(0,229,204,0.18) 50%, transparent 75%);
+    filter: blur(8px);
+    z-index: 0;
+    animation: logoPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes logoPulse {
+    from { opacity: 0.7; transform: scale(0.95); }
+    to   { opacity: 1;   transform: scale(1.05); }
+  }
+  .logo-glow img {
+    height: 62px;
+    width: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
 </style>
 </head>
 <body>
@@ -548,7 +576,7 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="Lumina RP" style="height:48px;width:auto;display:block;">
+      <div class="logo-glow"><img src="logo.png" alt="Lumina RP"></div>
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
@@ -704,10 +732,8 @@
       </div>
 
       <!-- FORM — uses Formspree; replace ACTION URL with your Formspree endpoint -->
-      <form id="gang-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="hidden" name="_subject" value="Lumina Application – Gang">
-        <input type="hidden" name="_replyto" value="">
-
+      <form id="gang-form" name="gang-application" method="POST" data-netlify="true" netlify>
+          <input type="hidden" name="form-name" value="gang-application">
         <!-- BASIC INFO -->
         <div class="form-section">
           <div class="form-section-label">
@@ -893,37 +919,49 @@
 </div>
 
 <script>
-  // Formspree AJAX submission
-  const form = document.getElementById('gang-form');
-  const successBox = document.getElementById('form-success');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const btn = form.querySelector('.btn-submit');
-    btn.textContent = 'Submitting...';
-    btn.disabled = true;
+  // Netlify Forms AJAX handler
+  function encode(data) {
+    return Object.keys(data)
+      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+      .join('&');
+  }
 
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        form.style.display = 'none';
-        successBox.style.display = 'block';
-      } else {
-        alert('Something went wrong. Please try again or contact a staff member on Discord.');
-        btn.textContent = 'Submit Application →';
+  function setupNetlifyForm(formId, successId, formName) {
+    const form = document.getElementById(formId);
+    const successBox = document.getElementById(successId);
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('[type="submit"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+      const data = { 'form-name': formName };
+      new FormData(form).forEach((val, key) => { data[key] = val; });
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(data)
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          if (successBox) successBox.style.display = 'block';
+        } else {
+          alert('Something went wrong. Please try again or contact staff on Discord.');
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }
+      } catch(err) {
+        alert('Connection error. Please try again.');
+        btn.textContent = originalText;
         btn.disabled = false;
       }
-    } catch {
-      alert('Connection error. Please try again.');
-      btn.textContent = 'Submit Application →';
-      btn.disabled = false;
-    }
-  });
+    });
+  }
+
+  setupNetlifyForm('gang-form', 'gang-success', 'gang-application');
 </script>
 
 </body>

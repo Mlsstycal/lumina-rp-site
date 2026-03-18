@@ -100,6 +100,34 @@
   .footer-bottom { max-width: 1140px; margin: 24px auto 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
   .footer-bottom p { font-size: 0.72rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; }
   .footer-bottom span { color: var(--cyan); }
+
+  .logo-glow {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .logo-glow::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(176,38,255,0.35) 0%, rgba(0,229,204,0.18) 50%, transparent 75%);
+    filter: blur(8px);
+    z-index: 0;
+    animation: logoPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes logoPulse {
+    from { opacity: 0.7; transform: scale(0.95); }
+    to   { opacity: 1;   transform: scale(1.05); }
+  }
+  .logo-glow img {
+    height: 62px;
+    width: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
 </style>
 </head>
 <body>
@@ -108,7 +136,9 @@
 <div class="wrap">
 
   <nav>
-    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Lumina RP"></a>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-glow"><img src="logo.png" alt="Lumina RP"></div>
+    </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="rules.html">Rules</a>
