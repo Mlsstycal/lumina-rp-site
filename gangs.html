@@ -23,11 +23,6 @@
   }
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(6,10,20,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 32px; gap: 24px; }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-  .nav-logo .circle { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--cyan); box-shadow: 0 0 10px rgba(0,229,204,0.4); display: flex; align-items: center; justify-content: center; flex-direction: column; }
-  .nav-logo .circle span { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 1.5px; color: var(--purple); line-height: 1; text-align: center; text-transform: uppercase; }
-  .nav-logo .circle span em { display: block; font-style: normal; color: var(--cyan); font-size: 6px; }
-  .nav-logo .name { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text); }
-  .nav-logo .name span { color: var(--purple); }
   .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; margin-left: 16px; }
   .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 12px; border-radius: 3px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
   .nav-links a:hover, .nav-links a.active { color: var(--cyan); background: rgba(0,229,204,0.07); }
@@ -553,8 +548,7 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">
-      <div class="circle"><span>LUMINA<em>SHINE&PROSPER</em></span></div>
-      <span class="name"><span>LUMINA</span> RP</span>
+      <img src="logo.png" alt="Lumina RP" style="height:48px;width:auto;display:block;">
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
