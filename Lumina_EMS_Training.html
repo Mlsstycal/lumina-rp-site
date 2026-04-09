@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina RP — EMS Training Handbook</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #050816;
+    --card: #0a0f2a;
+    --card2: #0d1235;
+    --purple: #C026D3;
+    --cyan: #00D4FF;
+    --white: #FFFFFF;
+    --gray: #8899AA;
+    --light-purple: #e879f9;
+    --green: #22cc66;
+    --red: #ff4444;
+    --border: #1e2a4a;
+    --header-bg: #1a0a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    border-top: 4px solid var(--purple);
+    border-bottom: 3px solid var(--cyan);
+  }
+
+  .cover-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    opacity: 0.7;
+  }
+
+  .cover h1 { font-size: 64px; font-weight: 900; color: var(--white); letter-spacing: 8px; text-transform: uppercase; margin-bottom: 12px; line-height: 1; }
+  .cover h2 { font-size: 28px; font-weight: 700; color: var(--purple); margin-bottom: 10px; line-height: 1.2; }
+  .cover h3 { font-size: 16px; font-weight: 400; color: var(--cyan); margin-bottom: 40px; }
+
+  .cover-line { width: 400px; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); margin: 20px auto; }
+  .cover-sub { font-size: 13px; font-style: italic; color: var(--gray); margin-top: 20px; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin: 48px 0 6px 0; }
+  .section-header .slash { color: var(--purple); font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+  .section-header h2 { font-size: 18px; font-weight: 700; color: var(--cyan); letter-spacing: 1px; text-transform: uppercase; }
+
+  .divider { height: 1px; background: linear-gradient(90deg, var(--purple), transparent); margin: 8px 0 20px 0; }
+
+  .sub-label { font-size: 12px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 2px; margin: 24px 0 8px 0; }
+
+  p.body-text { color: var(--white); font-size: 14px; line-height: 1.7; margin-bottom: 12px; opacity: 0.9; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+  thead tr { background: var(--header-bg); }
+  thead th { color: var(--purple); font-weight: 700; padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--border); }
+  tbody tr:nth-child(odd) { background: var(--card); }
+  tbody tr:nth-child(even) { background: var(--card2); }
+  tbody td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  tbody td:first-child { color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+  .step-num { color: var(--cyan) !important; font-family: 'JetBrains Mono', monospace !important; font-weight: 700 !important; text-align: center; width: 40px; }
+  .step-action { color: var(--light-purple) !important; font-weight: 600 !important; white-space: nowrap; }
+
+  .dos-donts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+  .dos-box, .donts-box { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 16px 20px; }
+  .dos-box { border-top: 2px solid var(--green); }
+  .donts-box { border-top: 2px solid var(--red); }
+  .dos-box .box-title { color: var(--green); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .donts-box .box-title { color: var(--red); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .dos-box li, .donts-box li { color: var(--white); font-size: 13px; margin-bottom: 8px; padding-left: 4px; opacity: 0.9; }
+  .dos-box li::marker { color: var(--green); }
+  .donts-box li::marker { color: var(--red); }
+  ul { padding-left: 20px; }
+
+  .checklist { background: var(--card); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .checklist-item { display: flex; align-items: center; gap: 16px; padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .checklist-item:nth-child(even) { background: var(--card2); }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box { width: 20px; height: 20px; border: 2px solid var(--cyan); border-radius: 3px; flex-shrink: 0; }
+
+  .sig-box { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border: 1px solid var(--border); margin-top: 24px; }
+  .sig-cell { background: var(--card); padding: 30px 20px 16px; border-right: 1px solid var(--border); text-align: center; }
+  .sig-cell:last-child { border-right: none; }
+  .sig-label { font-size: 10px; color: var(--purple); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+  .sig-line { border-top: 1px solid var(--border); margin-top: 30px; }
+
+  .info-box { background: var(--card); border-left: 3px solid var(--cyan); padding: 14px 18px; margin: 12px 0; font-size: 13px; color: var(--white); opacity: 0.9; line-height: 1.6; }
+  .info-box strong { color: var(--cyan); }
+
+  .warn-box { background: #1a0a0a; border-left: 3px solid var(--red); padding: 14px 18px; margin: 12px 0; font-size: 13px; color: var(--white); opacity: 0.9; line-height: 1.6; }
+  .warn-box strong { color: var(--red); }
+
+  .top-bar { height: 4px; background: linear-gradient(90deg, var(--purple), var(--cyan)); position: fixed; top: 0; left: 0; right: 0; }
+
+  .footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--gray); font-size: 12px; font-style: italic; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<div class="cover">
+  <div class="cover-badge">Lumina Roleplay — Official Documentation</div>
+  <h1>LUMINA RP</h1>
+  <h2>Emergency Medical Services</h2>
+  <h3>Paramedic Training Handbook</h3>
+  <div class="cover-line"></div>
+  <div class="cover-sub">Official Procedure Guide — Confidential — For Internal Use Only</div>
+</div>
+
+<div class="content">
+
+  <div class="section-header"><span class="slash">//</span><h2>Ranks &amp; Structure</h2></div>
+  <div class="divider"></div>
+  <table>
+    <thead><tr><th>Rank</th><th>Title</th><th>Permissions</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Trainee</td><td>Basic response, ride-along only — must pass evaluation to advance</td></tr>
+      <tr><td>1</td><td>EMT</td><td>Full response, revives, treating patients, all commands</td></tr>
+      <tr><td>2</td><td>Paramedic</td><td>Training trainees, mentoring, leading response units</td></tr>
+      <tr><td>3</td><td>Senior Paramedic</td><td>Supervise EMTs, approve operations, conduct evaluations</td></tr>
+      <tr><td>4</td><td>Chief Medic</td><td>Full command authority, department decisions, policy</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Getting Started — Clocking In</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Before you can respond to calls or appear on dispatch you must clock in. You have two options:</p>
+  <div class="info-box"><strong>Option 1 — Duty Sign:</strong> Head to the duty sign at the hospital and press E to sign on duty.</div>
+  <div class="info-box"><strong>Option 2 — F5 Job Menu:</strong> Press F5 to open your job menu and toggle on duty from there.</div>
+  <p class="body-text">Once on duty you will appear on the map for other medics and dispatch will track your location in real time.</p>
+
+  <div class="section-header"><span class="slash">//</span><h2>Progression System</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">EMS has a built-in XP and cash progression system. You earn XP and cash rewards by responding to emergencies. Level up from 1 to 50 with bigger cash bonuses at milestone levels.</p>
+  <div class="info-box"><strong>/mylevel</strong> — Shows your current level, total XP, and XP needed to reach the next level.</div>
+  <div class="info-box"><strong>/myunlocks</strong> — Opens your progression menu to view your stats.</div>
+  <div class="info-box"><strong>/emergencyboard</strong> — Shows the top 10 EMS leaderboard.</div>
+  <table>
+    <thead><tr><th>Milestone</th><th>Cash Bonus</th></tr></thead>
+    <tbody>
+      <tr><td>Level 10</td><td>$2,500</td></tr>
+      <tr><td>Level 20</td><td>$5,000</td></tr>
+      <tr><td>Level 30</td><td>$7,500</td></tr>
+      <tr><td>Level 40</td><td>$10,000</td></tr>
+      <tr><td>Level 50</td><td>$25,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Full Command Reference</h2></div>
+  <div class="divider"></div>
+
+  <div class="sub-label">General</div>
+  <table>
+    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>/mylevel</td><td>View your current EMS level and XP progress</td></tr>
+      <tr><td>/myunlocks</td><td>Open your progression menu</td></tr>
+      <tr><td>/emergencyboard</td><td>View the top 10 EMS leaderboard</td></tr>
+      <tr><td>/ambulance [message]</td><td>Send a dispatch call to all on duty medics</td></tr>
+      <tr><td>/police [message]</td><td>Send a dispatch call to police if you need backup</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-label">Patient Care</div>
+  <table>
+    <thead><tr><th>Action</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Revive Player</td><td>Revive a downed player — requires firstaid item in inventory</td></tr>
+      <tr><td>Heal Player</td><td>Treat wounds on a player — requires bandage item in inventory</td></tr>
+      <tr><td>Use First Aid</td><td>Use a first aid kit on yourself or a nearby player</td></tr>
+      <tr><td>Check Status</td><td>Check a patient's injury status and wound severity</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-label">Vehicles</div>
+  <table>
+    <thead><tr><th>Action</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Vehicle Garage</td><td>Access ambulance garage at the hospital — walk up and press E</td></tr>
+      <tr><td>Helicopter Pad</td><td>Access medical helicopter — walk up and press E at the helipad</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Radial Menu — Z Key</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Press Z to open the radial menu. Navigate to the Ambulance category for quick access to all medical actions.</p>
+  <div class="sub-label">Ambulance Category</div>
+  <table>
+    <thead><tr><th>Action</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Revive Player</td><td>Revive the closest downed player — requires firstaid item</td></tr>
+      <tr><td>Heal Player</td><td>Treat wounds on closest player — requires bandage item</td></tr>
+      <tr><td>Use First Aid</td><td>Use a first aid kit on yourself or nearby player</td></tr>
+      <tr><td>Ambulance Menu</td><td>Open the full ambulance job menu</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Dispatch &amp; Radio</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">When a call comes in you will see it on screen with the location. Always acknowledge calls on radio so other medics know you are responding.</p>
+  <table>
+    <thead><tr><th>Channel</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>35</td><td>EMS default — all units</td></tr>
+      <tr><td>36</td><td>H RNK — high rank coordination</td></tr>
+      <tr><td>37</td><td>Hospital channel</td></tr>
+      <tr><td>38</td><td>Patrol channel</td></tr>
+      <tr><td>10</td><td>Police default — use for joint operations</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>MDT — Mobile Data Terminal</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Type <strong style="color:var(--cyan)">/openmdt</strong> to open the MDT. EMS has limited access focused on patient records and incident documentation.</p>
+  <table>
+    <thead><tr><th>Tab</th><th>EMS Access</th></tr></thead>
+    <tbody>
+      <tr><td>Citizens</td><td>View citizen profiles and medical history. Cannot manage licenses or add criminal tags.</td></tr>
+      <tr><td>Incidents</td><td>Create and view medical incident reports. Document patient care, injuries, and treatment.</td></tr>
+      <tr><td>BOLOs</td><td>View active BOLOs from police. Cannot create BOLOs.</td></tr>
+      <tr><td>Dispatch</td><td>View all active calls and officer/medic locations on the map in real time.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Standard Response Workflow</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Follow this workflow every time you respond to a call.</p>
+  <table>
+    <thead><tr><th>#</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td class="step-num">1</td><td>Receive dispatch call — acknowledge on radio channel 35</td></tr>
+      <tr><td class="step-num">2</td><td>Respond to scene — use lights and sirens appropriately</td></tr>
+      <tr><td class="step-num">3</td><td>Assess the scene — ensure it is safe before approaching</td></tr>
+      <tr><td class="step-num">4</td><td>Check patient status — radial menu → Ambulance → Check Status</td></tr>
+      <tr><td class="step-num">5</td><td>Treat wounds if needed — radial menu → Ambulance → Heal Player</td></tr>
+      <tr><td class="step-num">6</td><td>Revive patient if downed — radial menu → Ambulance → Revive Player</td></tr>
+      <tr><td class="step-num">7</td><td>Transport to hospital if needed</td></tr>
+      <tr><td class="step-num">8</td><td>Document the call in MDT — create a medical incident report</td></tr>
+      <tr><td class="step-num">9</td><td>Clear the call on radio and return to patrol</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Emergency Scenarios</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">The server runs dynamic AI-generated emergencies that EMS will be dispatched to. These earn you XP and cash toward your progression level.</p>
+  <table>
+    <thead><tr><th>Scenario</th><th>Description</th><th>Your Role</th></tr></thead>
+    <tbody>
+      <tr><td>Car Crash</td><td>Single vehicle crash with injured victim</td><td>Treat and revive victim</td></tr>
+      <tr><td>Multi Car Crash</td><td>Two car crash with multiple victims</td><td>Triage and treat all victims</td></tr>
+      <tr><td>Medical Emergency</td><td>Collapsed person needing urgent care</td><td>Treat and revive</td></tr>
+      <tr><td>Overdose</td><td>Unconscious person from overdose</td><td>Administer Narcan, revive</td></tr>
+      <tr><td>Fight Victim</td><td>Assault victim on the ground</td><td>Treat injuries, document in MDT</td></tr>
+      <tr><td>Fall Victim</td><td>Person injured from a fall</td><td>Assess and treat injuries</td></tr>
+      <tr><td>Drown Victim</td><td>Person pulled from water</td><td>CPR, revive</td></tr>
+      <tr><td>Cardiac Arrest</td><td>Patient in cardiac arrest</td><td>Defibrillator / CPR</td></tr>
+      <tr><td>Hit and Run</td><td>Pedestrian struck by vehicle</td><td>Treat victim, notify police</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Required Items</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Stock up from the hospital supply room before going on patrol.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td>firstaid</td><td>Required to revive a downed player</td></tr>
+      <tr><td>bandage</td><td>Required to treat wounds on a patient</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Hospital — Key Locations</h2></div>
+  <div class="divider"></div>
+  <table>
+    <thead><tr><th>Location</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Duty Sign</td><td>Clock in and out of your shift</td></tr>
+      <tr><td>Vehicle Garage</td><td>Spawn your ambulance — walk up and press E</td></tr>
+      <tr><td>Helicopter Pad</td><td>Spawn medical helicopter — higher rank required</td></tr>
+      <tr><td>Supply Stash</td><td>Stock up on firstaid and bandage items before patrol</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Scene Safety Guidelines</h2></div>
+  <div class="divider"></div>
+  <div class="warn-box"><strong>Important:</strong> EMS is not law enforcement. If a scene is not safe do not enter. Request police backup and stage nearby until the scene is secured.</div>
+  <table>
+    <thead><tr><th>Situation</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Active shooter on scene</td><td>Stage at a safe distance — wait for police to secure before entering</td></tr>
+      <tr><td>Aggressive patient</td><td>Request police backup before treating</td></tr>
+      <tr><td>Multiple casualties</td><td>Triage — treat most critical first — call for backup medics</td></tr>
+      <tr><td>Unknown cause of injury</td><td>Assess for ongoing danger before approaching patient</td></tr>
+      <tr><td>Officer down call</td><td>Respond immediately — highest priority call</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-header"><span class="slash">//</span><h2>Do's and Don'ts</h2></div>
+  <div class="divider"></div>
+  <div class="dos-donts">
+    <div class="dos-box">
+      <div class="box-title">✓ Always</div>
+      <ul>
+        <li>Clock in before starting your shift</li>
+        <li>Acknowledge dispatch calls on radio</li>
+        <li>Assess scene safety before approaching</li>
+        <li>Document all patient care in the MDT</li>
+        <li>Have firstaid and bandages stocked before patrol</li>
+        <li>Request police backup when scene is unsafe</li>
+        <li>Treat all patients with professionalism and respect</li>
+      </ul>
+    </div>
+    <div class="donts-box">
+      <div class="box-title">✗ Never</div>
+      <ul>
+        <li>Enter an unsafe scene without police clearing it first</li>
+        <li>Refuse to treat a patient without valid RP reason</li>
+        <li>Share patient information out of character</li>
+        <li>Use your ambulance for non-medical purposes</li>
+        <li>Ignore a dispatch call without valid reason</li>
+        <li>Act on information you would not know in character</li>
+        <li>Abuse the revive system or treat it as a game mechanic</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-header"><span class="slash">//</span><h2>Training Evaluation Checklist</h2></div>
+  <div class="divider"></div>
+  <p class="body-text">Once you have read this handbook report to a Senior Paramedic or above for your in-game evaluation. You will be taken on a ride-along and tested on all items below.</p>
+  <div class="checklist">
+    <div class="checklist-item"><div class="check-box"></div><span>Can clock in using both the duty sign and F5 menu</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Knows all hospital key locations and what each one does</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can check /mylevel and understands the XP progression system</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can spawn an ambulance from the vehicle garage</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Knows all radio channels and when to use them</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can respond to a dispatch call and acknowledge on radio</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can assess patient status using the radial menu</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can treat wounds and revive a downed player correctly</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Understands scene safety and when to wait for police</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Can create a medical incident report in the MDT</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Knows all radial menu actions for the Ambulance category</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Understands do's and don'ts and RP standards</span></div>
+  </div>
+
+  <div class="sig-box">
+    <div class="sig-cell"><div class="sig-label">Evaluating Officer</div><div class="sig-line"></div></div>
+    <div class="sig-cell"><div class="sig-label">Date</div><div class="sig-line"></div></div>
+    <div class="sig-cell"><div class="sig-label">Result</div><div style="font-size:13px;color:var(--white);margin-top:16px;">PASS &nbsp;/&nbsp; FAIL</div></div>
+  </div>
+
+  <div class="footer">
+    Upon passing your evaluation your rank will be updated from Trainee to EMT.<br>
+    Lumina RP Emergency Medical Services — For questions contact a Senior Paramedic or above
+  </div>
+
+</div>
+</body>
+</html>
